@@ -266,7 +266,7 @@ export default function HiddenUnicornStory(){
 
 const ARCHETYPE_NAMES = [
   'Hybrid Interior Hubs',
-  'Low-Dribble Connective Frontcourt',
+  'Low-Dribble Connectors',
   'Movement / Off-Ball Scorers',
   'Connective Slashers',
   'Rim-Running Screen Bigs',

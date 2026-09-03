@@ -77,7 +77,7 @@ function percentileAgainstSorted(sortedAsc: number[], value: number) {
 
 export const clusters: Cluster[] = [
   { id: 1, name: 'Hybrid Interior Hubs', count: 35, prototype: 'Victor Wembanyama', description: 'Interior creators who mix post play, screening, isolation and passing gravity.' },
-  { id: 2, name: 'Low-Dribble Connective Frontcourt', count: 101, prototype: 'Jamir Watkins', description: 'Quick-decision frontcourt connectors: catch, move it, screen, space and keep the possession flowing.' },
+  { id: 2, name: 'Low-Dribble Connectors', count: 101, prototype: 'Jamir Watkins', description: 'Quick-decision frontcourt connectors: catch, move it, screen, space and keep the possession flowing.' },
   { id: 3, name: 'Movement / Off-Ball Scorers', count: 74, prototype: 'Max Christie', description: 'Scorers who create value by moving, cutting, receiving handoffs and attacking off the catch.' },
   { id: 4, name: 'Connective Slashers', count: 60, prototype: 'DeJon Jarreau', description: 'Advantage routers who pressure the rim, kick out and reverse the ball without dominating shots.' },
   { id: 5, name: 'Rim-Running Screen Bigs', count: 70, prototype: 'Marvin Bagley III', description: 'Screen, roll, finish, rebound. The cleanest and most traditional offensive archetype.' },
