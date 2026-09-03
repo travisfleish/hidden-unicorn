@@ -24,7 +24,6 @@ export type Player = {
   distanceToCentroid: number
   /**
    * Up to five automatically selected signature traits from the 31 behavioral features.
-   * Present for the unique-stats export cohort (currently 200 players).
    */
   signatureTraits?: SignatureTrait[]
   prototype?: boolean
