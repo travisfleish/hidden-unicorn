@@ -1,5 +1,6 @@
 import { scaleLinear } from 'd3'
 import { offensiveArchetypeDistances } from './offensiveArchetypeDistances'
+import { buildSignatureNote } from './signatureNote'
 import { uniqueStats, type SignatureTrait } from './uniqueStats'
 
 export type { SignatureTrait }
@@ -188,6 +189,13 @@ export const players: Player[] = offensiveArchetypeDistances.map((d) => {
       )
   const hiddenUnicornScore = 0.7 * rawPercentile + 0.3 * clusterPercentile
   const signatureTraits = signatureTraitsByName.get(d.playerName)
+  const isPrototype = meta?.prototype || prototypeNames.has(d.playerName) || undefined
+  const note =
+    meta?.note ||
+    buildSignatureNote(signatureTraits, d.cluster, {
+      prototype: Boolean(isPrototype),
+      rawPercentile,
+    })
   return {
     name: d.playerName,
     cluster: d.cluster,
@@ -198,8 +206,8 @@ export const players: Player[] = offensiveArchetypeDistances.map((d) => {
     hiddenUnicornScore,
     distanceToCentroid: d.distanceToCentroid,
     signatureTraits,
-    prototype: meta?.prototype || prototypeNames.has(d.playerName) || undefined,
-    note: meta?.note,
+    prototype: isPrototype,
+    note,
   }
 })
 
