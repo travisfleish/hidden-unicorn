@@ -140,7 +140,7 @@ export default function HiddenUnicornStory(){
         className="pointer-events-none absolute right-[2vw] top-1/2 w-[clamp(280px,42vw,620px)] -translate-y-1/2 select-none opacity-[0.12] max-[900px]:right-[-8vw] max-[900px]:w-[min(78vw,400px)] max-[900px]:opacity-[0.09]"
       />
       <p className="eyebrow">A DATA-DRIVEN BASKETBALL STORY</p>
-      <h1 className="relative mt-4 font-serif text-[clamp(52px,10vw,150px)] font-normal uppercase leading-[.84] tracking-[-.055em]">The <em className="not-italic text-hot">Hidden</em><br/>Unicorn</h1>
+      <h1 className="relative mt-4 font-serif text-[clamp(52px,10vw,150px)] font-normal uppercase leading-[.84] tracking-[-.055em]">The <em className="not-italic text-hot">Hidden</em><br/>Unicorns</h1>
       <p className="relative mt-5 text-[12px] uppercase tracking-[.18em] text-muted">by Travis Fleisher</p>
       <p className="relative mt-8 max-w-[760px] font-serif text-[clamp(21px,2.6vw,30px)] leading-[1.28]">The unique players <em className="font-normal text-hot">hiding in plain sight.</em></p>
       <p className="relative mt-6 max-w-[640px] font-serif text-[17px] leading-7 text-muted">Instead of asking which seven-footer can dribble, we let 473 NBA players&apos; actual statistical profiles define their own offensive archetype&hellip;then found the players who still refuse to fit.</p>
