@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- tall white unicorn horn — ~half the icon height -->
+  <path
+    d="M16 0 L22 17 L10 17 Z"
+    fill="#ffffff"
+    stroke="#0b0d12"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+  />
+  <!-- basketball sits under the horn -->
+  <circle cx="16" cy="23" r="8.5" fill="#E87722"/>
+  <path
+    d="M16 14.5v17M7.5 23h17M9.8 17c2.6 2.6 2.6 9.4 0 12M22.2 17c-2.6 2.6-2.6 9.4 0 12"
+    stroke="#0b0d12"
+    stroke-width="1.35"
+    stroke-linecap="round"
+  />
+</svg>
