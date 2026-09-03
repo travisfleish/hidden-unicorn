@@ -9,6 +9,7 @@ import {
   isHiddenUnicornEligible,
   officialHiddenUnicorns,
   sampleOpacity,
+  signatureTraitShortLabel,
   topInArchetype,
 } from '@/lib/data'
 import { headshotIds, headshotUrl } from '@/lib/headshots'
@@ -257,7 +258,7 @@ function SelectedPlayerStrip({
       style={{ top: `${FOCUS_PLAYER[1] + HALO_R + 4}%` }}
       aria-label={`${player.name} statistical profile`}
     >
-      <div className="pointer-events-auto relative w-full max-w-[560px] rounded-xl border border-black/10 bg-paper px-4 py-3.5 text-ink shadow-[0_12px_40px_rgba(0,0,0,.28)] max-[900px]:max-w-none max-[900px]:px-3.5 max-[900px]:py-3">
+      <div className="pointer-events-auto relative w-full max-w-[600px] rounded-xl border border-black/10 bg-paper px-4 py-3.5 text-ink shadow-[0_12px_40px_rgba(0,0,0,.28)] max-[900px]:max-w-none max-[900px]:px-3.5 max-[900px]:py-3">
         <button
           type="button"
           onClick={onClose}
@@ -306,6 +307,28 @@ function SelectedPlayerStrip({
             </div>
           ))}
         </dl>
+
+        {player.signatureTraits && player.signatureTraits.length > 0 ? (
+          <div className="mt-2.5 border-t border-black/10 pt-2.5">
+            <span className="block text-[8px] font-extrabold tracking-[.16em] text-muted">SIGNATURE TRAITS</span>
+            <dl className="mt-1.5 grid grid-cols-5 gap-2 max-[900px]:grid-cols-3">
+              {player.signatureTraits.map((trait) => (
+                <div key={trait.key} className="min-w-0" title={`${trait.label} · ${trait.direction} · ${trait.percentile.toFixed(1)}th percentile`}>
+                  <dt className="truncate text-[8px] font-extrabold uppercase tracking-[.12em] text-muted">
+                    {signatureTraitShortLabel(trait)}
+                  </dt>
+                  <dd className="mt-0.5 truncate text-[15px] font-semibold tabular-nums max-[900px]:text-[13px]">
+                    {trait.percentile.toFixed(0)}
+                    <span className="text-[10px] font-bold tracking-wide text-muted">th</span>
+                    <span className="ml-1 text-[9px] font-extrabold uppercase tracking-wide text-muted">
+                      {trait.direction}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ) : null}
 
         <p className="mt-3 border-t border-black/10 pt-2.5 font-serif text-[12px] leading-5 text-muted">{note}</p>
       </div>

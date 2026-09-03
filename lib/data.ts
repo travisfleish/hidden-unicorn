@@ -1,5 +1,8 @@
 import { scaleLinear } from 'd3'
 import { offensiveArchetypeDistances } from './offensiveArchetypeDistances'
+import { uniqueStats, type SignatureTrait } from './uniqueStats'
+
+export type { SignatureTrait }
 
 export type Cluster = { id: number; name: string; count: number; prototype: string; description: string }
 export type Player = {
@@ -19,6 +22,11 @@ export type Player = {
   hiddenUnicornScore: number
   /** Euclidean distance to assigned archetype centroid in standardized 31D feature space. */
   distanceToCentroid: number
+  /**
+   * Up to five automatically selected signature traits from the 31 behavioral features.
+   * Present for the unique-stats export cohort (currently 200 players).
+   */
+  signatureTraits?: SignatureTrait[]
   prototype?: boolean
   note?: string
 }
@@ -163,6 +171,10 @@ for (const [clusterId, members] of eligibleByCluster) {
 
 const prototypeNames = new Set(clusters.map((c) => c.prototype))
 
+const signatureTraitsByName = new Map(
+  uniqueStats.players.map((p) => [p.playerName, p.signatureTraits] as const),
+)
+
 export const players: Player[] = offensiveArchetypeDistances.map((d) => {
   const meta = featuredByName[normalizeName(d.playerName)] ?? featuredByName[d.playerName]
   const eligible = d.touches >= HIDDEN_UNICORN_MIN_TOUCHES
@@ -176,6 +188,7 @@ export const players: Player[] = offensiveArchetypeDistances.map((d) => {
         d.distanceToCentroid,
       )
   const hiddenUnicornScore = 0.7 * rawPercentile + 0.3 * clusterPercentile
+  const signatureTraits = signatureTraitsByName.get(d.playerName)
   return {
     name: d.playerName,
     cluster: d.cluster,
@@ -185,6 +198,7 @@ export const players: Player[] = offensiveArchetypeDistances.map((d) => {
     clusterPercentile,
     hiddenUnicornScore,
     distanceToCentroid: d.distanceToCentroid,
+    signatureTraits,
     prototype: meta?.prototype || prototypeNames.has(d.playerName) || undefined,
     note: meta?.note,
   }
@@ -237,3 +251,8 @@ export const featureNames = [
   'C&S shot share',
   'Pull-up shot share',
 ]
+
+/** featureIndex in unique-stats is 1-based relative to featureNames. */
+export function signatureTraitShortLabel(trait: SignatureTrait) {
+  return featureNames[trait.featureIndex - 1] ?? trait.label
+}
