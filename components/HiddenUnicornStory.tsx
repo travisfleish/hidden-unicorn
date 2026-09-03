@@ -11,12 +11,12 @@ import {
   players,
   type Player,
 } from '@/lib/data'
-import { headshotUrl } from '@/lib/headshots'
+import { headshotSrcSet } from '@/lib/headshots'
 
 function PlayerPhoto({ name, size = 68 }: { name: string; size?: number }) {
-  const src = headshotUrl(name)
+  const img = headshotSrcSet(name)
   const [ok, setOk] = useState(true)
-  if (!src || !ok)
+  if (!img || !ok)
     return (
       <div
         className="grid shrink-0 place-items-center rounded-xl bg-black/10 font-serif text-lg text-muted"
@@ -28,10 +28,16 @@ function PlayerPhoto({ name, size = 68 }: { name: string; size?: number }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={img.src}
+      srcSet={img.srcSet}
+      sizes={`${size}px`}
+      width={size}
+      height={size}
       alt={name}
+      loading="lazy"
+      decoding="async"
       onError={() => setOk(false)}
-      className="shrink-0 rounded-xl bg-black/5 object-cover object-top"
+      className="shrink-0 rounded-xl bg-black/5 object-cover"
       style={{ width: size, height: size }}
     />
   )

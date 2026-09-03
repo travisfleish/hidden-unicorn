@@ -5,7 +5,15 @@ import { uniqueStats, type SignatureTrait } from './uniqueStats'
 
 export type { SignatureTrait }
 
-export type Cluster = { id: number; name: string; count: number; prototype: string; description: string }
+export type Cluster = {
+  id: number
+  name: string
+  count: number
+  prototype: string
+  description: string
+  /** Canonical archetype color — single source of truth for every visualization. */
+  color: string
+}
 export type Player = {
   name: string
   cluster: number
@@ -76,14 +84,14 @@ function percentileAgainstSorted(sortedAsc: number[], value: number) {
 }
 
 export const clusters: Cluster[] = [
-  { id: 1, name: 'Hybrid Interior Hubs', count: 35, prototype: 'Victor Wembanyama', description: 'Interior creators who blend post play, screening, isolation and passing gravity.' },
-  { id: 2, name: 'Low-Dribble Connectors', count: 101, prototype: 'Jamir Watkins', description: 'Quick-decision frontcourt: catch it, move it, screen, and keep the ball flowing.' },
-  { id: 3, name: 'Movement / Off-Ball Scorers', count: 74, prototype: 'Max Christie', description: 'Scorers who create by moving: cutting, curling off screens, attacking the catch.' },
-  { id: 4, name: 'Connective Slashers', count: 60, prototype: 'DeJon Jarreau', description: 'Advantage-movers who pressure the rim and kick out without hunting their own shot.' },
-  { id: 5, name: 'Rim-Running Screen Bigs', count: 70, prototype: 'Marvin Bagley III', description: 'Screen, roll, finish, rebound. The most traditional offensive role there is.' },
-  { id: 6, name: 'Primary Shot Creators', count: 39, prototype: 'CJ McCollum', description: 'High-usage engines who bend defenses with isolation, pick-and-roll and self-created shots.' },
-  { id: 7, name: 'Perimeter Organizers', count: 42, prototype: 'Bones Hyland', description: 'Perimeter decision-makers who organize a possession more than they consume it.' },
-  { id: 8, name: 'Drive-First Lead Creators', count: 52, prototype: 'Ryan Rollins', description: 'Initiators built around penetration, ball pressure and drive-created offense.' }
+  { id: 1, name: 'Hybrid Interior Hubs', count: 35, prototype: 'Victor Wembanyama', description: 'Interior creators who blend post play, screening, isolation and passing gravity.', color: '#c96f4a' },
+  { id: 2, name: 'Low-Dribble Connectors', count: 101, prototype: 'Jamir Watkins', description: 'Quick-decision frontcourt: catch it, move it, screen, and keep the ball flowing.', color: '#be9b45' },
+  { id: 3, name: 'Movement / Off-Ball Scorers', count: 74, prototype: 'Max Christie', description: 'Scorers who create by moving: cutting, curling off screens, attacking the catch.', color: '#6876bc' },
+  { id: 4, name: 'Connective Slashers', count: 60, prototype: 'DeJon Jarreau', description: 'Advantage-movers who pressure the rim and kick out without hunting their own shot.', color: '#5d9277' },
+  { id: 5, name: 'Rim-Running Screen Bigs', count: 70, prototype: 'Marvin Bagley III', description: 'Screen, roll, finish, rebound. The most traditional offensive role there is.', color: '#8895a4' },
+  { id: 6, name: 'Primary Shot Creators', count: 39, prototype: 'CJ McCollum', description: 'High-usage engines who bend defenses with isolation, pick-and-roll and self-created shots.', color: '#b65368' },
+  { id: 7, name: 'Perimeter Organizers', count: 42, prototype: 'Bones Hyland', description: 'Perimeter decision-makers who organize a possession more than they consume it.', color: '#7d65a3' },
+  { id: 8, name: 'Drive-First Lead Creators', count: 52, prototype: 'Ryan Rollins', description: 'Initiators built around penetration, ball pressure and drive-created offense.', color: '#3e8792' }
 ]
 
 /** Normalize curly/smart quotes so curated names match the model export. */

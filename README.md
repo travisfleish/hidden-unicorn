@@ -1,4 +1,4 @@
-# The Hidden Unicorn
+# The Hidden Unicorns
 
 Interactive NBA offensive archetype story built with **Next.js, TypeScript, Tailwind CSS, Framer Motion, and D3**.
 

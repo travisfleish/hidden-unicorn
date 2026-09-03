@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { scaleLinear } from 'd3'
 import type { Cluster, Player } from '@/lib/data'
 import {
+  clusters as clusterData,
   HIDDEN_UNICORN_MIN_TOUCHES,
   isHiddenUnicornEligible,
   officialHiddenUnicorns,
@@ -12,7 +13,7 @@ import {
   signatureTraitShortLabel,
   topInArchetype,
 } from '@/lib/data'
-import { headshotIds, headshotUrl } from '@/lib/headshots'
+import { headshotIds, headshotSrcSet } from '@/lib/headshots'
 
 type Dot = Player & { x: number; y: number; ghost?: boolean; key: string }
 type LabelSide = 'above' | 'below' | 'left' | 'right'
@@ -30,7 +31,8 @@ const labelSide: Record<number, LabelSide> = {
   1:'above',2:'above',3:'above',4:'below',5:'below',6:'above',7:'above',8:'below'
 }
 const HALO_R=9.2
-const colors: Record<number,string> = {1:'#c96f4a',2:'#be9b45',3:'#6876bc',4:'#5d9277',5:'#8895a4',6:'#b65368',7:'#7d65a3',8:'#3e8792'}
+// Canonical archetype colors live on `clusters` in lib/data.ts — keep one source of truth.
+const colors: Record<number,string> = Object.fromEntries(clusterData.map((c) => [c.id, c.color]))
 const hash=(s:string)=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 const rand=(seed:number)=>{const x=Math.sin(seed*999.91)*43758.5453;return x-Math.floor(x)}
 // Round so Node vs browser float drift on Math.sin/cos doesn't break hydration
@@ -127,14 +129,17 @@ function Portrait({d,r,opacity,cx,cy}:{d:Dot;r:number;opacity:number;cx:number;c
     <defs>
       <clipPath id={clipId}><circle cx={d.x} cy={d.y} r={r}/></clipPath>
     </defs>
-    <image href={`/headshots/${id}.png`} x={d.x-box/2} y={d.y-box/2} width={box} height={box}
-      preserveAspectRatio="xMidYMin slice" clipPath={`url(#${clipId})`} style={{imageRendering:'auto'}}/>
+    {/* Face-centered r320 WebP (sharp/Lanczos) instead of the 1040px indexed PNG:
+        the SVG draws this into a viewBox-100 box, so the raw source would be
+        downscaled ~15x by the browser and the face would smear. */}
+    <image href={`/headshots/r320/${id}.webp`} x={d.x-box/2} y={d.y-box/2} width={box} height={box}
+      preserveAspectRatio="xMidYMid slice" clipPath={`url(#${clipId})`} style={{imageRendering:'auto'}}/>
   </motion.g>
 }
 
 function RosterPhoto({ name, size = 32 }: { name: string; size?: number }) {
-  const src = headshotUrl(name)
-  if (!src) {
+  const img = headshotSrcSet(name)
+  if (!img) {
     return (
       <span
         className="grid shrink-0 place-items-center rounded-full bg-black/10 text-[9px] font-semibold text-muted"
@@ -147,9 +152,15 @@ function RosterPhoto({ name, size = 32 }: { name: string; size?: number }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={img.src}
+      srcSet={img.srcSet}
+      sizes={`${size}px`}
+      width={size}
+      height={size}
       alt=""
-      className="shrink-0 rounded-full bg-black/5 object-cover object-top"
+      loading="lazy"
+      decoding="async"
+      className="shrink-0 rounded-full bg-black/5 object-cover"
       style={{ width: size, height: size }}
     />
   )

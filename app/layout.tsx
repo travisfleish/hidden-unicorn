@@ -4,7 +4,7 @@ import { sans, serif } from './fonts'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'The Hidden Unicorn',
+  title: 'The Hidden Unicorns',
   description: "Finding the NBA players basketball doesn't know where to put.",
 }
 
