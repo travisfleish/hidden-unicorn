@@ -184,6 +184,7 @@ function ClusterRoster({
       >
         <span className="text-[10px] font-extrabold tracking-[.16em] text-muted">TOP 10 IN ARCHETYPE</span>
         <h3 className="mt-1.5 font-serif text-[18px] leading-tight text-ink max-[900px]:text-[15px]">{cluster.name}</h3>
+        <p className="mt-1.5 font-serif text-[12px] leading-[1.4] text-muted">{cluster.description}</p>
         <ol className="mt-3.5 space-y-1">
           {top.map((p, i) => {
             const isSelected = selected?.name === p.name
