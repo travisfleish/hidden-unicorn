@@ -447,7 +447,6 @@ export default function Galaxy({clusters, players, scene, selected, activeCluste
                   {canPickCluster ? (
                     <circle cx={centers[c.id][0]} cy={centers[c.id][1]} r={HALO_R + 1.2} fill="transparent" />
                   ) : null}
-                  <circle cx={centers[c.id][0]} cy={centers[c.id][1]} r={HALO_R} fill="none" stroke={colors[c.id]} strokeWidth={focused ? 0.4 : 0.28} opacity={focused ? 0.45 : 0.28}/>
                   {lines.map((ln,i)=>(
                     <motion.text
                       key={i}
