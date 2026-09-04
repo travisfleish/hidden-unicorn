@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Galaxy from './Galaxy'
+import RosterDna from './RosterDna'
+import FloatingNav from './FloatingNav'
 import {
   clusters,
   HIDDEN_UNICORN_MIN_TOUCHES,
@@ -137,7 +139,8 @@ export default function HiddenUnicornStory(){
   const frameVisible=frameMode!=='hidden'
 
   return <main className="min-h-screen bg-paper text-ink">
-    <section className="relative flex min-h-[760px] flex-col justify-center overflow-hidden px-[8vw] py-[8vw]">
+    <FloatingNav />
+    <section id="top" className="relative flex min-h-[760px] flex-col justify-center overflow-hidden px-[8vw] py-[8vw]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         aria-hidden
@@ -265,6 +268,8 @@ export default function HiddenUnicornStory(){
       </article>
     </div>
 
+    <RosterDna />
+
     <MethodologyAppendix />
     <footer className="flex justify-between px-[4vw] py-8 text-[10px] tracking-[.1em]"><strong>THE HIDDEN UNICORN</strong><span className="text-muted">Next.js interactive draft · offensive model only</span></footer>
   </main>
@@ -293,7 +298,7 @@ const FEATURE_FAMILIES = [
 
 function MethodologyAppendix(){
   return (
-    <section className="bg-ink px-[8vw] py-[12vw] text-paper">
+    <section id="method" className="scroll-mt-6 bg-ink px-[8vw] py-[12vw] text-paper">
       <span className="eyebrow">METHOD</span>
       <h2 className="mt-4 font-serif text-[clamp(38px,5vw,74px)] leading-none tracking-[-.035em]">Style, not quality.</h2>
       <p className="mt-6 max-w-[800px] font-serif text-[21px] leading-8">
@@ -441,6 +446,14 @@ function MethodologyAppendix(){
         <p className="mt-4 text-zinc-400">These are intentionally different.</p>
       </MethodBlock>
 
+      <MethodBlock title="Roster DNA" className="mt-16 max-w-[1100px]">
+        <p>
+          Team fingerprints are games-weighted: a player who logged 70 games shapes a team’s composition
+          far more than a 3-game rental. Share = Σ games in an archetype ÷ Σ games across all clustered
+          players on the roster. Descriptive only — not a verdict on roster quality.
+        </p>
+      </MethodBlock>
+
       <div className="mt-16 grid max-w-[1100px] gap-16 lg:grid-cols-2">
         <MethodBlock title="Sample-size treatment">
           <p>
@@ -542,7 +555,7 @@ function StoryScene({id,eyebrow,title,children,dwell='default'}:{id:string;eyebr
     ? 'relative min-h-[420vh] max-[900px]:min-h-[320vh]'
     : 'relative min-h-[260vh] max-[900px]:min-h-[200vh]'
   return (
-    <section data-scene={id} className={height}>
+    <section id={id} data-scene={id} className={`${height} scroll-mt-6`}>
       <div className="sticky top-6 flex min-h-[calc(100vh-3rem)] flex-col justify-center py-10 max-[900px]:top-[calc(60vh+0.75rem)] max-[900px]:min-h-0 max-[900px]:justify-start max-[900px]:py-5">
         <span className="eyebrow">{eyebrow}</span>
         <h2 className="my-4 font-serif text-[clamp(38px,5vw,74px)] leading-[.96] tracking-[-.035em]">{title}</h2>
