@@ -8,7 +8,7 @@ import {
   leagueAverageArchetype as LEAGUE,
   teamArchetypeDna,
 } from '@/lib/teamArchetypeDna'
-import { chartPalette, spokeColor } from '@/lib/teamColors'
+import { chartPalette, outlineColor, spokeColor } from '@/lib/teamColors'
 
 // Fixed radial geometry. Radius encodes games-weighted share; angle is a fixed archetype slot.
 const R_MIN = 11
@@ -77,7 +77,7 @@ export default function RosterDna() {
   const di = argmax(current)
   const palette = chartPalette(team.abbrev)
   const teamGlow = palette[0]
-  const teamStroke = palette[Math.min(1, palette.length - 1)]
+  const teamStroke = outlineColor(palette)
 
   const pts = current.map((s, i) => [pxAt(i, radius(s)), pyAt(i, radius(s))] as const)
   const poly = pts.map(([x, y]) => `${f2(x)},${f2(y)}`).join(' ')
@@ -314,11 +314,12 @@ export default function RosterDna() {
                     strokeLinejoin="round"
                   />
 
-                  {/* soft glow behind the shape — team primary */}
-                  <polygon points={poly} fill={teamGlow} opacity="0.24" filter={`url(#${uid}-blur)`} />
+                  {/* soft glow — primary; dark primaries stay dark */}
+                  <polygon points={poly} fill={teamGlow} opacity="0.2" filter={`url(#${uid}-blur)`} />
 
-                  {/* the fingerprint — multi-color team wedges cycling the full palette */}
-                  <g style={{ mixBlendMode: 'screen' }} opacity="0.72">
+                  {/* the fingerprint — three team colors cycled around the spokes (no screen blend,
+                      so black/navy wedges actually read instead of vanishing) */}
+                  <g opacity="0.55">
                     {clusters.map((c, i) => {
                       const [ax, ay] = pts[i]
                       const [bx, by] = pts[(i + 1) % 8]
@@ -336,7 +337,7 @@ export default function RosterDna() {
                     points={poly}
                     fill="none"
                     stroke={teamStroke}
-                    strokeOpacity="0.6"
+                    strokeOpacity="0.75"
                     strokeWidth="0.55"
                     strokeLinejoin="round"
                   />

@@ -226,10 +226,12 @@ function SelectedPlayerStrip({
   player,
   cluster,
   onClose,
+  closeLabel = 'Back to archetype',
 }: {
   player: Player
   cluster: Cluster
   onClose: () => void
+  closeLabel?: string
 }) {
   const eligible = isHiddenUnicornEligible(player)
   const eyebrow = player.prototype
@@ -275,7 +277,7 @@ function SelectedPlayerStrip({
           type="button"
           onClick={onClose}
           className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-black/5 hover:text-ink"
-          aria-label="Back to archetype"
+          aria-label={closeLabel}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
             <path d="M3 3l8 8M11 3L3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -391,8 +393,10 @@ export default function Galaxy({clusters, players, scene, selected, activeCluste
   }
   const activeMeta = activeCluster ? clusters.find((c) => c.id === activeCluster) : null
   const focusMode: 'roster' | 'player' = selected ? 'player' : 'roster'
+  // Unicorn beat opens a cluster only for focus — close returns to the full map, not Top 10.
+  const playerCloseLabel = scene === 'unicorn' ? 'Back to map' : 'Back to archetype'
 
-  // Escape returns to the archetype roster without a full map reset.
+  // Escape: unicorn → full map; elsewhere → archetype roster (handled by onClearPlayer).
   useEffect(() => {
     if (!selected) return
     const onKey = (e: KeyboardEvent) => {
@@ -555,7 +559,7 @@ export default function Galaxy({clusters, players, scene, selected, activeCluste
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="absolute inset-0 z-[1] cursor-default bg-transparent"
-            aria-label="Back to archetype"
+            aria-label={playerCloseLabel}
             onClick={onClearPlayer}
           />
         ) : null}
@@ -568,6 +572,7 @@ export default function Galaxy({clusters, players, scene, selected, activeCluste
             player={selected}
             cluster={activeMeta}
             onClose={onClearPlayer}
+            closeLabel={playerCloseLabel}
           />
         ) : null}
       </AnimatePresence>

@@ -117,8 +117,11 @@ export default function HiddenUnicornStory(){
     setActiveCluster(p.cluster)
   }
   const pickCluster=(id:number)=>{setActiveCluster(prev=>prev===id?null:id);setSelected(null)}
-  // Deselect player but keep the archetype open (return to Top 10 roster).
-  const clearPlayer=()=>setSelected(null)
+  // From a cluster Top 10: keep the archetype open. From the unicorn list: return to the full galaxy.
+  const clearPlayer=()=>{
+    setSelected(null)
+    if(scene==='unicorn') setActiveCluster(null)
+  }
   // Close Top 10 / focused archetype and return to the full map.
   const clearCluster=()=>{setSelected(null);setActiveCluster(null)}
   const reset=()=>{setSelected(null);setActiveCluster(null);setQuery('')}
